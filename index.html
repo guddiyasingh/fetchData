@@ -5,15 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>fetch data</title>
 </head>
+<style>
+     .container{
+        background-color: blue;
+        min-height: 90vh;            /* full viewport height */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;      /* vertical center */
+        align-items: center;          /* horizontal center */
+        gap: 1rem;
+        padding: 1rem;
+        box-sizing: border-box;
+      }
+       #pokemonName{
+        text-align: center;
+        width: 260px;
+        padding: 0.5rem;
+        font-size: 1rem;
+      }
+
+       .button-group{
+        display: flex;
+        gap: 0.5rem;
+        justify-content: center;
+        margin-top: 10px;
+      }
+
+       button{
+        padding: 0.45rem 0.8rem;
+        cursor: pointer;
+      }
+
+
+</style>
 <body>
     <!-- <h1>Fetch Data Example</h1>
     <button id="fetchButton">Fetch Data</button>
     <pre id="output"></pre> -->
-
-    <input type="text" id="pokemonName" placeholder="Enter pokemon name">
-     <button onclick="fetchData()">Fetch pokemon</button>
-     <button onclick="deleteItem()" id="text">Delete</button>
-     <img src="" alt="pokemon sprite" id ="pokemonSprite" style="display: none;">
+      <div class="container">
+         <input type="text" id="pokemonName" placeholder="Enter pokemon name">
+         <div class="button-group">
+         <button onclick="fetchData()">Fetch pokemon</button>
+         <button onclick="deleteItem()" id="text">Delete</button>
+         </div>
+         <img src="" alt="pokemon sprite" id ="pokemonSprite" style="display: none;">
+      </div>
+   
     <script>
         // fetch("https://pokeapi.co/api/v2/pokemon/pikachu")
         // .then(response =>{
