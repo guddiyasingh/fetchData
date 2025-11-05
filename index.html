@@ -12,7 +12,7 @@
 
     <input type="text" id="pokemonName" placeholder="Enter pokemon name">
      <button onclick="fetchData()">Fetch pokemon</button>
-     <button onclick="deleteItem()">Delete</button>
+     <button onclick="deleteItem()" id="text">Delete</button>
      <img src="" alt="pokemon sprite" id ="pokemonSprite" style="display: none;">
     <script>
         // fetch("https://pokeapi.co/api/v2/pokemon/pikachu")
@@ -53,6 +53,8 @@
         }
         function deleteItem(){
             const imgElement = document.getElementById("pokemonSprite");
+            const pokemonNameInput = document.getElementById("pokemonName");
+            pokemonNameInput.value = "";
             imgElement.src = "";
             imgElement.style.display = "none";
         }
