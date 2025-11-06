@@ -1,56 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>fetch data</title>
 </head>
 <style>
-     .container{
+    
+
+    /* ensure the page fills viewport and has no default body margin */
+    html, body {
+        height: 100%;
+        margin: 0;
+    }
+
+    /* center the container both horizontally and vertically */
+    body {
+
+        min-height: 100vh;
+        display: flex;
+        align-items: center;      /* vertical center */
+        justify-content: center;  /* horizontal center */
+        background: #f3f4f6;      /* optional */
+    }
+
+    .container {
+        border: rebeccapurple 2px solid;
         background-color: blue;
-        min-height: 90vh;            /* full viewport height */
+        width: clamp(280px, 90%, 600px);
+        height: clamp(280px, 90%, 600px);; /* responsive width with limits */
+        margin: 0;                         /* remove previous top/bottom margin */
         display: flex;
         flex-direction: column;
-        justify-content: center;      /* vertical center */
-        align-items: center;          /* horizontal center */
+        justify-content: center;
+        align-items: center;
         gap: 1rem;
         padding: 1rem;
         box-sizing: border-box;
-      }
-       #pokemonName{
+        border-radius: 6px;               /* optional */
+    }
+
+    #pokemonName {
         text-align: center;
         width: 260px;
         padding: 0.5rem;
         font-size: 1rem;
-      }
+    }
 
-       .button-group{
+    .button-group {
         display: flex;
         gap: 0.5rem;
         justify-content: center;
         margin-top: 10px;
-      }
+    }
 
-       button{
+    button {
         padding: 0.45rem 0.8rem;
         cursor: pointer;
-      }
+    }
+    
+    button {
+        padding: 0.45rem 0.8rem;
+        cursor: pointer;
+        background: #fff;
+        color: #111;
+        border: 1px solid rgba(0,0,0,0.08);
+        border-radius: 6px;
+        transition: transform 200ms cubic-bezier(.2,.9,.2,1), box-shadow 200ms, background-color 150ms, color 150ms;
+        will-change: transform, box-shadow, background-color;
+        transform: translateZ(0);
+    }
 
+    button:hover {
+        transform: translateY(-6px) rotateX(3deg);
+        box-shadow: 0 18px 30px rgba(0,0,0,0.18);
+        background: linear-gradient(135deg,#6366f1,#60a5fa);
+        color: #fff;
+        border-color: rgba(0,0,0,0.12);
+    }
+
+    button:active {
+        transform: translateY(-2px) scale(0.995);
+        box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+    }
+
+    button:focus {
+        outline: 3px solid rgba(99,102,241,0.18);
+        outline-offset: 2px;
+    }
+
+    
+
+   
+    img {
+        width: 200px;
+        height: 200px;
+    }
+</style>
 
 </style>
+
 <body>
     <!-- <h1>Fetch Data Example</h1>
     <button id="fetchButton">Fetch Data</button>
     <pre id="output"></pre> -->
-      <div class="container">
-         <input type="text" id="pokemonName" placeholder="Enter pokemon name">
-         <div class="button-group">
-         <button onclick="fetchData()">Fetch pokemon</button>
-         <button onclick="deleteItem()" id="text">Delete</button>
-         </div>
-         <img src="" alt="pokemon sprite" id ="pokemonSprite" style="display: none;">
-      </div>
-   
+    <div class="container">
+        <input type="text" id="pokemonName" placeholder="Enter pokemon name">
+        <div class="button-group">
+            <button onclick="fetchData()">Fetch pokemon</button>
+            <button onclick="deleteItem()" id="text">Delete</button>
+        </div>
+        <img src="" alt="pokemon sprite" id="pokemonSprite" style="display: none;">
+    </div>
+
     <script>
         // fetch("https://pokeapi.co/api/v2/pokemon/pikachu")
         // .then(response =>{
@@ -62,40 +125,41 @@
         // .then(data => console.log(data.weight))
         // .catch(error => console.error(error));
 
-        fetchData() 
+        fetchData()
         deleteItem()
 
-        async function fetchData(){
-           try{
+        async function fetchData() {
+            try {
 
-            const pokemonName = document.getElementById("pokemonName").value.toLowerCase();
-            const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
+                const pokemonName = document.getElementById("pokemonName").value.toLowerCase();
+                const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
 
-            if(!response.ok){
-                throw new Error("could not fetch resource");
+                if (!response.ok) {
+                    throw new Error("could not fetch resource");
+                }
+
+                const data = await response.json();
+                const pokemonSprite = data.sprites.front_default;
+                const imgElement = document.getElementById("pokemonSprite");
+
+                imgElement.src = pokemonSprite;
+                imgElement.style.display = "block";
             }
-           
-              const data = await response.json();
-              const pokemonSprite = data.sprites.front_default;
-              const imgElement = document.getElementById("pokemonSprite");
 
-             imgElement.src = pokemonSprite;
-             imgElement.style.display = "block";
-           }
-         
-           catch(error){
-            console.error(error);
-           }
-           
+            catch (error) {
+                console.error(error);
+            }
+
         }
-        function deleteItem(){
+        function deleteItem() {
             const imgElement = document.getElementById("pokemonSprite");
             const pokemonNameInput = document.getElementById("pokemonName");
             pokemonNameInput.value = "";
             imgElement.src = "";
             imgElement.style.display = "none";
         }
-       
+
     </script>
 </body>
+
 </html>
